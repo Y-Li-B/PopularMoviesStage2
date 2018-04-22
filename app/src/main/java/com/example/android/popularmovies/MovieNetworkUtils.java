@@ -21,8 +21,8 @@ class MovieNetworkUtils {
     //TODO API KEY FIELD IS HERE!
     private final static String API_KEY = "";
     //Sort orders of the movie query.
-    final static String SORT_ORDER_POPULAR = "popularity.desc";
-    final static String SORT_ORDER_HIGHEST_RATED = "vote_average.desc";
+    final static String SORT_ORDER_POPULAR = "/movie/popular";
+    final static String SORT_ORDER_HIGHEST_RATED = "/movie/top_rated";
 
 
     static String buildPosterURL(String path) {
@@ -45,12 +45,10 @@ class MovieNetworkUtils {
 
     static private String buildDiscoverURL(String sortOrder) {
 
-        final String DISCOVER_BASE_URL = BASE_URL + "/discover/movie";
-        final String SORT_BY_PARAM = "sort_by";
+        final String DISCOVER_BASE_URL = BASE_URL + sortOrder;
 
         Uri uri = Uri.parse(DISCOVER_BASE_URL).buildUpon()
-                .appendQueryParameter(API_KEY_PARAM, API_KEY)
-                .appendQueryParameter(SORT_BY_PARAM, sortOrder).build();
+                .appendQueryParameter(API_KEY_PARAM, API_KEY).build();
 
         return uri.toString();
     }
