@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.popularmovies.DetailsActivity"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/colorBackground"
+    >
+<android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <!--Head of details-->
+    <ImageView
+        android:id="@+id/movie_poster_thumbnail_iv"
+        android:layout_width="@dimen/poster_width"
+        android:layout_height="@dimen/poster_height"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/poster_iv_desc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title_rating_release_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingExtra="4dp"
+        android:padding="10dp"
+        android:textColor="@color/colorText"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/movie_poster_thumbnail_iv"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/movie_poster_thumbnail_iv"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/add_to_fav_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/add_to_fav_button"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/movie_poster_thumbnail_iv"
+        app:layout_constraintTop_toBottomOf="@id/title_rating_release_tv" />
+    <View
+        android:id="@+id/line1"
+        style="@style/line"
+        app:layout_constraintTop_toBottomOf="@id/movie_poster_thumbnail_iv"
+        app:layout_constraintStart_toStartOf="parent"
+            />
+    <!--End of head of details-->
+
+    <!--Synopsis-->
+    <TextView
+        android:id="@+id/synopsis_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="12dp"
+        android:textColor="@color/colorText"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/movie_poster_thumbnail_iv"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
+    <!--trailers-->
+
+    <View
+        android:id="@+id/line2"
+        style="@style/line"
+        app:layout_constraintTop_toBottomOf="@id/synopsis_tv"
+        app:layout_constraintStart_toStartOf="@id/movie_poster_thumbnail_iv"
+        />
+
+    <TextView
+        style="@style/out_tv"
+        android:id="@+id/watch_trailers_tv"
+        app:layout_constraintTop_toBottomOf="@id/line2"
+        app:layout_constraintStart_toStartOf="@id/movie_poster_thumbnail_iv"
+        android:text="@string/watch_trailers"
+        />
+
+    <View
+        android:id="@+id/line3"
+        style="@style/line"
+        app:layout_constraintTop_toBottomOf="@id/watch_trailers_tv"
+        app:layout_constraintStart_toStartOf="@id/movie_poster_thumbnail_iv"
+        />
+
+    <TextView
+        style="@style/out_tv"
+        android:id="@+id/read_reviews_tv"
+        app:layout_constraintTop_toBottomOf="@id/line3"
+        app:layout_constraintStart_toStartOf="@id/movie_poster_thumbnail_iv"
+        android:text="@string/read_reviews"
+        />
+
+    <View
+        app:layout_constraintTop_toBottomOf="@id/read_reviews_tv"
+        app:layout_constraintStart_toStartOf="@id/movie_poster_thumbnail_iv"
+        style="@style/line"
+        android:background="@color/colorBackground"/>
+</android.support.constraint.ConstraintLayout>
+</ScrollView>
+

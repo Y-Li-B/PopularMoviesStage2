@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="movie_trailer_tag" type="id">MOVIE_TRAILER</string>
+
+</resources>
