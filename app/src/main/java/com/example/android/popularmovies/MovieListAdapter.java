@@ -53,16 +53,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
         void bind(int itemPosition) {
 
-            //todo Please check this...
-            // Why are images being cached and loaded correctly offline , when
-            // I am loading the url via picasso with s2?
-            // why is this behavior not happening when I am loading with s1?
-            // even though s1 is equal to s2........
-            // some info would be very appreciated, thank you.
-            String s1 = mData[itemPosition].getPosterThumbnailURL();
+
             String s2 = MovieNetworkUtils.buildPosterURL(mData[itemPosition].getPosterPath());
-            boolean b = s1.equals(s2); //This outputs true...
-            //------------------------------
 
             Picasso.with(moviePoster.getContext()).
                     load(s2)
