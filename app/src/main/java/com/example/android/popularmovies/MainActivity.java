@@ -1,5 +1,6 @@
 package com.example.android.popularmovies;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -55,8 +56,7 @@ public class MainActivity extends TaskActivity implements LoaderManager.LoaderCa
 
         mMoviesRV = findViewById(R.id.movie_grid_rv);
 
-        int span = calculateSpanCount((getResources().getDimensionPixelOffset(R.dimen.poster_width)),
-                getResources().getDimensionPixelOffset(R.dimen.poster_margin));
+        int span = calculateSpanCount(getResources().getDimensionPixelOffset(R.dimen.poster_width));
 
         mMoviesRV.setLayoutManager(new GridLayoutManager(this, span));
         mMoviesRV.setHasFixedSize(true);
@@ -158,13 +158,12 @@ public class MainActivity extends TaskActivity implements LoaderManager.LoaderCa
 
     /**
      * @param elementWidth  the width of view
-     * @param elementMargin layout_margin around the element
      * @return how many views can fit in the screen
      */
-    int calculateSpanCount(int elementWidth, int elementMargin) {
+    int calculateSpanCount(int elementWidth) {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        return metrics.widthPixels / (elementWidth + elementMargin);
+        return metrics.widthPixels / elementWidth ;
     }
 
     @Override
