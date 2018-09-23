@@ -14,7 +14,7 @@
         <provider
             android:exported="false"
             android:authorities="com.example.android.popularmovies.provider"
-            android:name=".PopularMoviesCP"/>
+            android:name=".content.PopularMoviesContentProvider"/>
         <!-- start of main activity -->
         <activity android:name=".MainActivity"
                     android:launchMode="singleTop">

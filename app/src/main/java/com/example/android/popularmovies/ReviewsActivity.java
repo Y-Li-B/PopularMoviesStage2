@@ -5,11 +5,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.example.android.popularmovies.adapters.ReviewListAdapter;
+import com.example.android.popularmovies.model.Movie;
+import com.example.android.popularmovies.model.Review;
+import com.example.android.popularmovies.tasks.FetchDataTask;
+import com.example.android.popularmovies.tasks.TaskActivity;
+import com.example.android.popularmovies.utils.NetworkUtils;
+
 import org.json.JSONException;
 
 import java.io.IOException;
 
-public class ReviewsActivity extends TaskActivity  {
+public class ReviewsActivity extends TaskActivity {
     
     TextView mErrorTV; 
     RecyclerView mReviewsRV;
@@ -28,23 +35,23 @@ public class ReviewsActivity extends TaskActivity  {
         mReviewsRV.setHasFixedSize(true);
 
         new FetchDataTask(this)
-                .execute(getIntent().getStringExtra(Movie.MOVIE_ID_TAG));
+                .execute(getIntent().getStringExtra(Movie.ID_TAG));
     }
 
     @Override
-    protected TextView getLoadingFailView() {
+    protected TextView getLoadFailureTextView() {
         return mErrorTV;
     }
 
     @Override
-    protected RecyclerView getLoadingSuccessView() {
+    protected RecyclerView getLoadSuccessView() {
         return mReviewsRV;
     }
 
     //This is the same string that will be passed to the asynctask
     @Override
     protected Object[] getData(String param) throws IOException, JSONException {
-        return MovieNetworkUtils.getReviews(param);
+        return NetworkUtils.getReviews(param);
     }
 
     @Override

@@ -5,6 +5,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.example.android.popularmovies.adapters.TrailerListAdapter;
+import com.example.android.popularmovies.model.Movie;
+import com.example.android.popularmovies.tasks.FetchDataTask;
+import com.example.android.popularmovies.tasks.TaskActivity;
+import com.example.android.popularmovies.utils.NetworkUtils;
+
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -26,23 +32,23 @@ public class TrailersActivity extends TaskActivity {
         mTrailersRV.setHasFixedSize(true);
 
         new FetchDataTask(this)
-                .execute(getIntent().getStringExtra(Movie.MOVIE_ID_TAG));
+                .execute(getIntent().getStringExtra(Movie.ID_TAG));
     }
 
 
     @Override
-    protected TextView getLoadingFailView() {
+    protected TextView getLoadFailureTextView() {
         return mErrorTV;
     }
 
     @Override
-    protected RecyclerView getLoadingSuccessView() {
+    protected RecyclerView getLoadSuccessView() {
         return mTrailersRV;
     }
 
     @Override
     protected Object[] getData(String movieId) throws IOException, JSONException {
-        return MovieNetworkUtils.getTrailerKeys(movieId);
+        return NetworkUtils.getTrailerKeys(movieId);
     }
 
     @Override

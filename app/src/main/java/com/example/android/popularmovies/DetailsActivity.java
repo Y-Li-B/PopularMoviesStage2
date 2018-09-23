@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.popularmovies.content.Contract;
+import com.example.android.popularmovies.content.DBUtils;
+import com.example.android.popularmovies.model.Movie;
+import com.example.android.popularmovies.utils.NetworkUtils;
 import com.squareup.picasso.Picasso;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -18,35 +22,21 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        final Movie movie = getIntent().getParcelableExtra(Movie.MOVIE_PARCEL_TAG);
-        populate(movie);
-
         TextView trailerTV = findViewById(R.id.watch_trailers_tv);
         TextView reviewTV = findViewById(R.id.read_reviews_tv);
-        final Button addToFavB = findViewById(R.id.add_to_fav_button);
+        final Button favoriteButton = findViewById(R.id.add_to_fav_button);
 
-        if (isFavorite(movie.getId())) addToFavB.setText(R.string.remove_from_fav_button);
+        final Movie movie = getIntent().getParcelableExtra(Movie.PARCEL_TAG);
 
-        addToFavB.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                if(!isFavorite(movie.getId())) {
-                    DBUtils.addMovie(getContentResolver(), movie);
-                    addToFavB.setText(R.string.remove_from_fav_button);
-                }
-                else{
-                    DBUtils.removeMovie(getContentResolver(), movie.getId());
-                    addToFavB.setText(R.string.add_to_fav_button);
+        populate(movie);
 
-                }
-                getContentResolver().notifyChange(Contract.FavoriteMovies.TABLE_URI,null);
-            }
-        });
+        initFavButton(favoriteButton,movie);
+
         trailerTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetailsActivity.this, TrailersActivity.class);
-                intent.putExtra(Movie.MOVIE_ID_TAG, movie.getId() + "");
+                intent.putExtra(Movie.ID_TAG, movie.getId() + "");
                 startActivity(intent);
             }
         });
@@ -55,11 +45,32 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DetailsActivity.this, ReviewsActivity.class);
-                intent.putExtra(Movie.MOVIE_ID_TAG, movie.getId() + "");
+                intent.putExtra(Movie.ID_TAG, movie.getId() + "");
                 startActivity(intent);
             }
         });
 
+
+    }
+
+    void initFavButton(final Button favoriteButton,final Movie movie){
+
+        if (isFavorite(movie.getId())) favoriteButton.setText(R.string.remove_from_fav_button);
+
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!isFavorite(movie.getId())) {
+                    DBUtils.addMovie(getContentResolver(), movie);
+                    favoriteButton.setText(R.string.remove_from_fav_button);
+                } else {
+                    DBUtils.removeMovie(getContentResolver(), movie.getId());
+                    favoriteButton.setText(R.string.add_to_fav_button);
+
+                }
+                getContentResolver().notifyChange(Contract.FavoriteMovies.TABLE_URI, null);
+            }
+        });
 
     }
 
@@ -68,31 +79,32 @@ public class DetailsActivity extends AppCompatActivity {
         TextView titleRatingRelease = findViewById(R.id.title_rating_release_tv);
         TextView synopsisTV = findViewById(R.id.synopsis_tv);
 
-        String originalTitle = movie.getOriginalTitle()
-                .equals("") ? "???" : movie.getOriginalTitle();
 
-        String releaseDate = movie.getReleaseDate()
-                .equals("") ? "???" : movie.getReleaseDate();
+        String originalTitle = movie.getOriginalTitle().isEmpty()
+                ? "???" : movie.getOriginalTitle();
 
-        String synopsis = movie.getSynopsis()
-                .equals("") ? "???" : movie.getSynopsis();
+        String releaseDate = movie.getReleaseDate().isEmpty()
+                ? "???" : movie.getReleaseDate();
+
+        String synopsis = movie.getSynopsis().isEmpty()
+                ? "???" : movie.getSynopsis();
 
 
-        Picasso.with(this).load(MovieNetworkUtils.buildPosterURL(movie.getPosterPath())).
+        Picasso.with(this).load(NetworkUtils.buildPosterURL(movie.getPosterPath())).
                 error(R.drawable.ic_launcher_background).into(posterThumbnail);
 
         titleRatingRelease.setText(
-                String.format(getString(R.string.title_rating_release),
+                getString(R.string.title_rating_release,
                         originalTitle, movie.getRating(), releaseDate));
 
-        synopsisTV.setText(String.format(getString(R.string.synopsis), synopsis));
+        synopsisTV.setText(getString(R.string.synopsis, synopsis));
 
     }
 
-    boolean isFavorite(int movieId){
-        Cursor c = DBUtils.queryMovie(getContentResolver(),movieId);
+    boolean isFavorite(int movieId) {
+        Cursor c = DBUtils.queryMovie(getContentResolver(), movieId);
         boolean result = c.getCount() != 0;
         c.close();
-        return result ;
+        return result;
     }
 }
