@@ -3,7 +3,7 @@
 This is the second project for the Udacity Android Nanodegree.
 
 ## Screenshots:
-<img src="https://i.imgur.com/AseCsPf.png" width="180" height="320" hspace="50">
+<img src="/screenshots/menu.png" width="180" height="320" hspace="50">
 
 ## PROJECT SPECIFICATION
 
